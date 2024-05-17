@@ -1,0 +1,192 @@
+<div class="container-fluid">
+
+  <app-page-title title="Users List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row mb-2">
+            <div class="col-sm-4">
+              <div class="search-box me-2 mb-2 d-inline-block">
+                <div class="position-relative">
+                  <input type="text" class="form-control" id="searchTableList" placeholder="Search...">
+                  <i class="bx bx-search-alt search-icon"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-8">
+              <div class="text-sm-end">
+                <button type="button" data-bs-toggle="modal" (click)="newContactModal.show()" class="btn btn-success btn-rounded waves-effect waves-light addContact-modal mb-2"><i class="mdi mdi-plus me-1"></i> Ajouter membre</button>
+              </div>
+            </div><!-- end col-->
+          </div>
+          <!-- end row -->
+          <!--div class="table-responsive">
+            <table class="table align-middle table-nowrap table-hover dt-responsive nowrap w-100" id="userList-table">
+              <thead class="table-light">
+                <tr>
+                  <th scope="col" style="width: 40px;">#</th>
+                  <th scope="col">Nom</th>
+                  <th scope="col">Prenom</th>
+
+                  <th scope="col">Email</th>
+                  <th scope="col">Téléphone</th>
+                  <th scope="col">Grade</th>
+                  <th scope="col" style="width: 200px;">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of users;let i = index;">
+                  <td>
+                    <div class="avatar-xs" *ngIf="!data.profile">
+                      <span class="avatar-title rounded-circle">
+                        {{data.nom.charAt(0)}}
+                      </span>
+                    </div>
+                  
+                  </td>
+                  <td>
+                    <h5 class="font-size-14 mb-1"><a href="javascript: void(0);" class="text-dark">{{data.prenom}}</a>
+                    </h5>
+                    <p class="text-muted mb-0">({{data.departement}})</p>
+                  </td>
+                  <td>
+                    {{data.nom}}
+                       </td>
+                  <td>{{data.email}}</td>
+                  <td>{{data.telephone}}</td>
+               
+                  <td>
+                    {{data.grade}}
+                  </td>
+                  <td>
+                    <ul class="list-inline font-size-20 contact-links mb-0">
+                      <li class="list-inline-item px-2">
+                        <a href="javascript:void(0);" tooltip="Message"><i class="bx bx-message-square-dots"></i></a>
+                      </li>
+                      <li class="list-inline-item px-2">
+                        <a href="javascript:void(0);" tooltip="Profile"><i class="bx bx-user-circle"></i></a>
+                      </li>
+                      <li class="list-inline-item">
+                        <div dropdown class="dropdown">
+                          <a dropdownToggle href="javascript: void(0);" class="dropdown-toggle card-drop px-2 show" aria-expanded="true"> <i class="mdi mdi-dots-horizontal font-size-18"></i> </a>
+                          <ul *dropdownMenu class="dropdown-menu dropdown-menu-end show" style="position: absolute; inset: 0px 0px auto auto; margin: 0px; transform: translate(0px, 31.25px);" placement="bottom-end">
+                            <li><a href="javascript:void(0);" (click)="editUser(i)" class="dropdown-item edit-list" data-edit-id="8"><i class="mdi mdi-pencil font-size-16 text-success me-1"></i> Edit</a></li>
+                            <li><a href="javascript:void(0);" (click)="removeUser(i)" class="dropdown-item remove-list" data-remove-id="8"><i class="mdi mdi-trash-can font-size-16 text-danger me-1"></i> Delete</a></li>
+                          </ul>
+                        </div>
+                      </li>
+                    </ul>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div-->
+          <div class="row">
+            <div class="col-lg-12">
+              <!--ul class="pagination pagination-rounded justify-content-center mt-4">
+                <pagination [totalItems]="(total | async)!" [(ngModel)]="service.page">
+                </pagination>
+              </ul-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div bsModal #newContactModal="bs-modal" class="modal fade" id="newContactModal" tabindex="-1" aria-labelledby="newContactModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newContactModalLabel">Add Contact</h5>
+        <button type="button" class="btn-close" (click)="newContactModal.hide()"></button>
+      </div>
+      <div class="modal-body">
+        <!--form autocomplete="off"  class="needs-validation createContact-form" id="createContact-form" >
+          <div class="row">
+            <div class="col-lg-12">
+        
+              <div class="mb-3">
+                <label for="username-input" class="form-label">Nom</label>
+                <input type="text" id="username-input" class="form-control" placeholder="nom" name="nom" [(ngModel)]="personne.nom" required />
+                <div class="invalid-feedback">Veuillez saisir le nom.</div>
+              </div>
+              <div class="mb-3">
+                <label for="username-input" class="form-label">Prenom</label>
+                <input type="text" id="username-input" class="formname="prenom" [(ngModel)]="personne.prenom"  required />
+                <div class="invalid-feedback">Veuillez saisir le Prenom.</div>
+              </div>
+              <div class="mb-3">
+                <label for="designation-input" class="form-label">Département</label>
+                <input type="text" id="designation-input" class="form-control" placeholder="Enter departement" [(ngModel)]="personne.departement"  name="departement" required />
+                <div class="invalid-feedback">Veuillez saisir le département.</div>
+              </div>
+              <div class="mb-3">-control" placeholder="Enter name" 
+                <label for="email-input" class="form-label">Email</label>
+                <input type="email" id="email-input" class="form-control" [(ngModel)]="personne.email" name="email"  placeholder="Enter email"  required />
+                <div class="invalid-feedback">Veuillez saisir le email.</div>
+              </div>
+              <div class="mb-3">
+                <label for="email-input" class="form-label">Téléphone</label>
+                <input type="email" id="email-input" class="form-control" [(ngModel)]="personne.telephone" name="telephone"  placeholder="Enter email"  required />
+                <div class="invalid-feedback">Veuillez saisir le téléphone.</div>
+              </div>
+              <div class="mb-3">
+                <label for="email-input" class="form-label">Mot de passe</label>
+                <input type="password" id="email-input" class="form-control" [(ngModel)]="personne.mdp" name="mdp"  placeholder="Enter mot de passe"  required />
+                <div class="invalid-feedback">Veuillez saisir le mot de passe.</div>
+              </div>
+              <div class="mb-3">
+                <label for="tag-input" class="form-label">grade</label>
+                <select class="select2 form-control select2-multiple" id="tag-input" [(ngModel)]="personne.grade"  name="grade" data-placeholder="choisir ...">
+                  <option value="Administrateur">Administrateur</option>
+                  <option value="Responsable">Responsable</option>
+                  <option value="Technicien">Technicien</option>
+             
+                </select>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="text-end">
+                <button type="button" class="btn btn-outline-secondary me-1" (click)="newContactModal.hide()">Cancel</button>
+                <button type="submit" id="addContact-btn" class="btn btn-success">Ajouter Utilisateur</button>
+              </div>
+            </div>
+          </div>
+        </form-->
+      </div>
+      <!-- end modal body -->
+    </div>
+    <!-- end modal-content -->
+  </div>
+  <!-- end modal-dialog -->
+</div>
+<!-- end newContactModal -->
+
+<!-- removeItemModal -->
+<div bsModal #removeItemModal="bs-modal" class="modal fade" id="removeItemModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+      <div class="modal-body px-4 py-5 text-center">
+        <button type="button" class="btn-close position-absolute end-0 top-0 m-3"  (click)="removeItemModal.hide()"></button>
+        <div class="avatar-sm mb-4 mx-auto">
+          <div class="avatar-title bg-primary text-primary bg-opacity-10 font-size-20 rounded-3">
+            <i class="mdi mdi-trash-can-outline"></i>
+          </div>
+        </div>
+        <p class="text-muted font-size-16 mb-4">Are you Sure You want to Remove this User ?</p>
+
+        <div class="hstack gap-2 justify-content-center mb-0">
+          <button type="button" class="btn btn-danger me-1" id="remove-item" (click)="confirmDelete()">Remove Now</button>
+          <button type="button" class="btn btn-secondary" (click)="removeItemModal.hide()">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- end removeItemModal -->
