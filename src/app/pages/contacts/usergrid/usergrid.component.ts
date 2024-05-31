@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, UntypedFormArray, Validators } from '@angular/forms';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
+import { UntypedFormArray, UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 
 import { Usergrid } from './usergrid.model';
 
+import { UtilisateurService } from 'src/app/shared/services/utilisateur.service';
 import { userGridData } from './data';
 
 @Component({
@@ -18,6 +19,7 @@ import { userGridData } from './data';
 export class UsergridComponent implements OnInit {
   // bread crumb items
   breadCrumbItems: Array<{}>;
+  utilisateurs:any;
 
   modalRef?: BsModalRef;
 
@@ -28,7 +30,15 @@ export class UsergridComponent implements OnInit {
   items: UntypedFormArray;
   // Select2 Dropdown
   selectValue: string[];
-  constructor(private modalService: BsModalService, private formBuilder: UntypedFormBuilder) { }
+  constructor(private modalService: BsModalService, private formBuilder: UntypedFormBuilder, private utilisateurService:UtilisateurService) { 
+//
+// get all utilisateurs
+    this.utilisateurService.getUtilisateurs().subscribe(data=>{
+      this.utilisateurs = data;
+      console.log(this.utilisateurs);
+    })
+
+  }
 
   ngOnInit() {
     this.selectValue = ['Photoshop', 'illustrator', 'Html', 'Css', 'Php', 'Java', 'Python'];

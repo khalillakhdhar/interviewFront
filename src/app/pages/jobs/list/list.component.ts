@@ -1,15 +1,17 @@
-import { Component, QueryList, ViewChildren, OnInit } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 import { Observable } from 'rxjs';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { UntypedFormBuilder, UntypedFormGroup, FormArray, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
 
+import { Interview } from 'src/app/shared/classes/interview';
+import { InterviewService } from 'src/app/shared/services/interview.service';
+import { JobListdata } from './data';
+import { NgbdJobListSortableHeader } from './list-sortable.directive';
 import { jobListModel } from './list.model';
 import { JobListService } from './list.service';
-import { NgbdJobListSortableHeader, SortEvent } from './list-sortable.directive';
-import { JobListdata } from './data';
 
 @Component({
   selector: 'app-list',
@@ -37,8 +39,17 @@ export class ListComponent implements OnInit {
   total: Observable<number>;
   @ViewChildren(NgbdJobListSortableHeader) headers!: QueryList<NgbdJobListSortableHeader>;
   currentPage: any;
-
-  constructor(private modalService: BsModalService, public service: JobListService, private formBuilder: UntypedFormBuilder) {
+  interviews:any;
+  interview: any;
+  constructor(private modalService: BsModalService, public service: JobListService, private formBuilder: UntypedFormBuilder
+    ,private interviewService: InterviewService
+  ) {
+    // get all interviews
+    this.interviewService.getInterviews().subscribe(data=>{
+      this.interviews = data;
+      console.log(this.interviews);
+    })
+    
     this.jobList = service.jobList$;
     this.total = service.total$;
   }
@@ -204,5 +215,16 @@ export class ListComponent implements OnInit {
   pageChanged(event: any) {
     this.currentPage = event.page;
   }
+addOneInterview()
+{
+  this.interviewService.addInterview(this.interview,parseInt(localStorage.getItem("id"))).subscribe(
+    response=>{
+      console.log("interview ajouté avec succés",response);
+      this.interview={} as Interview;
+    }
+  )
+
+}
+
 
 }

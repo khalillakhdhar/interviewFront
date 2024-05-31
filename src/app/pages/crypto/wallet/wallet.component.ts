@@ -1,12 +1,14 @@
-import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { DecimalPipe } from '@angular/common';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Observable } from 'rxjs';
 
+import { SortEvent, WalletSortableService } from './wallet-sortable.directive';
 import { WalletService } from './wallet.service';
-import { WalletSortableService, SortEvent } from './wallet-sortable.directive';
 
-import { ChartType, Activities } from './wallet.model';
+import { Activities, ChartType } from './wallet.model';
 
+import { Offre } from 'src/app/shared/classes/offre';
+import { OffreService } from 'src/app/shared/services/offre.service';
 import { OveviewChart, activitiesData } from './data';
 
 @Component({
@@ -16,6 +18,7 @@ import { OveviewChart, activitiesData } from './data';
   providers: [WalletService, DecimalPipe]
 })
 export class WalletComponent implements OnInit {
+  Offres:any;
 
   // breadcrumb items
   breadCrumbItems: Array<{}>;
@@ -26,11 +29,20 @@ export class WalletComponent implements OnInit {
   activities$: Observable<Activities[]>;
   total: Observable<number>;
 
+  offre={} as Offre;
+
   @ViewChildren(WalletSortableService) headers: QueryList<WalletSortableService>;
 
-  constructor(public service: WalletService) {
+  constructor(public service: WalletService, private offreService:OffreService) {
     this.activities$ = service.activities$;
     this.total = service.total$;
+// get all offres
+    this.offreService.getOffres().subscribe(data=>{
+      this.Offres = data;
+      console.log(this.Offres);
+    })
+
+
   }
 
 
@@ -55,5 +67,12 @@ export class WalletComponent implements OnInit {
     });
     this.service.sortColumn = column;
     this.service.sortDirection = direction;
+  }
+  addOffre(){
+    this.offreService.addOffre(this.offre,parseInt(localStorage.getItem("id"))).subscribe(
+      response=>{
+        console.log("offre ajouté avec succés",response);
+      }
+    )
   }
 }

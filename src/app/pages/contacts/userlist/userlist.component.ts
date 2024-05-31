@@ -6,6 +6,8 @@ import { Observable } from 'rxjs';
 
 
 
+import { Utilisateur } from 'src/app/shared/classes/utilisateur';
+import { UtilisateurService } from 'src/app/shared/services/utilisateur.service';
 import { userList } from './data';
 import { NgbdUserListSortableHeader } from './userlist-sortable.directive';
 import { userListModel } from './userlist.model';
@@ -36,7 +38,8 @@ export class UserlistComponent implements OnInit {
 users:Personne[] = [];
 personne:Personne={} as Personne;
 */
-
+utilisateurs:any;
+utilisateur={} as Utilisateur;
   @ViewChildren(NgbdUserListSortableHeader) headers!: QueryList<NgbdUserListSortableHeader>;
   @ViewChild('newContactModal', { static: false }) newContactModal?: ModalDirective;
   @ViewChild('removeItemModal', { static: false }) removeItemModal?: ModalDirective;
@@ -44,8 +47,16 @@ personne:Personne={} as Personne;
 
   // constructor(){}
 
-  constructor(private modalService: BsModalService, public service: userListService, private formBuilder: UntypedFormBuilder) {
-
+  constructor(private modalService: BsModalService, public service: userListService, private formBuilder: UntypedFormBuilder,
+    private utilisateurService:UtilisateurService
+  ) {
+    // get all utilisateurs
+    this.utilisateurService.getUtilisateurs().subscribe(data=>{
+      this.utilisateurs = data;
+      console.log(this.utilisateurs);
+    }
+    )
+    
   
     this.contactsList = service.countries$;
     this.total = service.total$;
@@ -166,4 +177,15 @@ addPersonne()
     userList.splice(this.deleteId, 1);
     this.removeItemModal.hide();
   }
+// createPersonne
+createUtilisateur(){
+  this.utilisateurService.addUtilisateur(this.utilisateur).subscribe(
+    response=>{
+      console.log("utilisateur ajouté avec succés",response);
+      this.utilisateur={} as Utilisateur;
+    }
+  )
+}
+
+
 }

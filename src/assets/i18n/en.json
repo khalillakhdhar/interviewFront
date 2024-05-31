@@ -123,7 +123,7 @@
       }
     },
     "CRYPTO": {
-      "TEXT": "Demandes",
+      "TEXT": "Offres",
       "LIST": {
         "WALLET": "Historique",
         "BUY/SELL": "RIB",

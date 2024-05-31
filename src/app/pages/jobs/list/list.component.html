@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" *ngIf="interviews">
   <app-page-title title="Jobs List" [breadcrumbItems]="breadCrumbItems"></app-page-title>
 
   <div class="row">
@@ -8,82 +8,35 @@
           <div class="d-flex align-items-center">
             <h5 class="mb-0 card-title flex-grow-1">Jobs Lists</h5>
             <div class="flex-shrink-0 d-flex gap-1">
-              <a href="javascript:void(0);" class="btn btn-primary" (click)="openModal(content)">Add New Job</a>
+              <a href="javascript:void(0);" class="btn btn-primary" (click)="openModal(content)">Ajouter un interview</a>
               <a href="javascript:void(0);" class="btn btn-light"><i class="mdi mdi-refresh"></i></a>
-              <div class="dropdown d-inline-block" dropdown>
-                <button type="menu" class="btn btn-success" id="*dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false" dropdownToggle><i class="mdi mdi-dots-vertical"></i></button>
-                <ul class="dropdown-menu dropdown-menu dropdown-menu-end show" aria-labelledby="*dropdownMenuButton1" *dropdownMenu>
-                  <li><a class="dropdown-item" href="javascript:void(0);">Action</a></li>
-                  <li><a class="dropdown-item" href="javascript:void(0);">Another action</a></li>
-                  <li><a class="dropdown-item" href="javascript:void(0);">Something else here</a></li>
-                </ul>
-              </div>
+          
             </div>
           </div>
         </div>
-        <div class="card-body border-bottom">
-          <div class="row g-3">
-            <div class="col-xxl-4 col-lg-6">
-              <input type="search" class="form-control" id="searchInput" placeholder="Search for ..." [(ngModel)]="service.searchTerm">
-            </div>
-            <div class="col-xxl-2 col-lg-6">
-              <select class="form-select" [(ngModel)]="service.status" id="idStatus" aria-label="Default select example">
-                <option value="">Select Status</option>
-                <option value="Active">Active</option>
-                <option value="New">New</option>
-                <option value="Close">Close</option>
-              </select>
-            </div>
-            <div class="col-xxl-2 col-lg-4">
-              <select class="form-select" [(ngModel)]="service.type" id="idType" aria-label="Default select example">
-                <option value="">Select Type</option>
-                <option value="Full Time">Full Time</option>
-                <option value="Part Time">Part Time</option>
-                <option value="Internship">Internship</option>
-                <option value="Freelance">Freelance</option>
-              </select>
-            </div>
-            <div class="col-xxl-2 col-lg-4">
-              <div id="datepicker1">
-                <input type="text" placeholder="Datepicker" class="form-control " bsDatepicker [bsConfig]="{ showWeekNumbers: false }">
-
-              </div><!-- input-group -->
-            </div>
-            <div class="col-xxl-2 col-lg-4">
-              <button type="button" class="btn btn-soft-secondary w-100"><i class="mdi mdi-filter-outline align-middle"></i> Filter</button>
-            </div>
-          </div>
-        </div>
+        
         <div class="card-body">
 
           <div class="table-responsive">
             <table class="table align-middle dt-responsive nowrap w-100 table-check" id="job-list">
               <thead>
                 <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Job Title</th>
-                  <th scope="col">Company Name</th>
-                  <th scope="col">Location</th>
-                  <th scope="col">Experience</th>
-                  <th scope="col">Position</th>
-                  <th scope="col">Type</th>
-                  <th scope="col">Posted Date</th>
-                  <th scope="col">Last Date</th>
-                  <th scope="col">Status</th>
+                  <th scope="col">numéro</th>
+                  <th scope="col">Offre</th>
+                  <th scope="col">Intervenant</th>
+                  <th scope="col">Candidat</th>
+                  <th scope="col">lien</th>
                   <th scope="col">Action</th>
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let data of lists">
-                  <th scope="row">{{data.id}}</th>
-                  <td>{{data.title}}</td>
-                  <td>{{data.name}}</td>
-                  <td>{{data.location}}</td>
-                  <td>{{data.experience}}</td>
-                  <td>{{data.position}}</td>
-                  <td><span class="badge badge-soft-{{data.type_color}}" [ngClass]="{'badge-soft-success': data.type === 'Full Time','badge-soft-danger': data.type === 'Part Time','badge-soft-info': data.type === 'Freelance','badge-soft-warning': data.type === 'Internship'}">{{data.type}}</span></td>
-                  <td>{{data.posted_date}}</td>
-                  <td>{{data.last_date}}</td>
+                <tr *ngFor="let data of interviews.content;let i=index">
+                  <th scope="row">{{i+1}}</th>
+                  <td>{{data.offre.description}}</td>
+                  <td>{{data.responsable}}</td>
+                  <td>{{data.participant.nom+" "+data.participant.prenom}}</td>
+                  <td>{{data.url}}</td>
+                  
                   <td><span class="badge" [ngClass]="{ 'bg-success': data.status === 'Active', 'bg-info': data.status === 'New', 'bg-danger': data.status === 'Close'}">{{data.status}}</span></td>
                   <td>
                     <ul class="list-unstyled hstack gap-1 mb-0">
@@ -104,7 +57,7 @@
           </div>
           <div class="row justify-content-between align-items-center">
             <div class="col-auto me-auto">
-              <p class="text-muted mb-0">Showing <b>{{service.startIndex}}</b> to <b>{{service.endIndex}}</b> of <b>{{service.totalRecords}}</b> entries</p>
+              <p class="text-muted mb-0">voir <b>{{service.startIndex}}</b> to <b>{{service.endIndex}}</b> of <b>{{service.totalRecords}}</b> entries</p>
             </div>
             <div class="col-auto">
               <div class="text-md-right float-md-end pagination-rounded">

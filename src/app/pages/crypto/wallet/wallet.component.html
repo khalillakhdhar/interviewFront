@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div *ngIf="Offres" class="container-fluid">
 
     <app-page-title title="Wallets" [breadcrumbItems]="breadCrumbItems"></app-page-title>
 
@@ -187,217 +187,42 @@
                         <tab heading="All" class="mt-4">
                             <div class="row mb-md-2">
                                 <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="tickets-table_length"><label
-                                            class="d-inline-flex align-items-center">Show
-                                            <select name="tickets-table_length" aria-controls="tickets-table"
-                                                name="pageSize" [(ngModel)]="service.pageSize"
-                                                class="custom-select custom-select-sm form-control form-control-sm mx-2">
-                                                <option [ngValue]="10">10</option>
-                                                <option [ngValue]="25">25</option>
-                                                <option [ngValue]="50">50</option>
-                                                <option [ngValue]="100">100</option>
-                                            </select> entries</label></div>
+                                    
                                 </div>
                                 <!-- Search -->
-                                <div class="col-sm-12 col-md-6">
-                                    <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
-                                            class="d-inline-flex align-items-center">Search:
-                                            <input type="text" name="searchTerm"
-                                                class="form-control form-control-sm ms-2" aria-controls="tickets-table"
-                                                [(ngModel)]="service.searchTerm"></label></div>
-                                </div>
+                        
                                 <!-- End search -->
                             </div>
                             <!-- Table -->
                             <table id="basic-datatable" class="table datatables dt-responsive nowrap">
                                 <thead>
                                     <tr>
-                                        <th sortable="id" (sort)="onSort($event)">ID No</th>
-                                        <th sortable="date" (sort)="onSort($event)">Date</th>
-                                        <th sortable="type" (sort)="onSort($event)">Type</th>
-                                        <th sortable="currency" (sort)="onSort($event)">Currency</th>
-                                        <th sortable="amount" (sort)="onSort($event)">Amount</th>
-                                        <th sortable="usd" (sort)="onSort($event)">Amount in USD</th>
+                                        <th sortable="id" (sort)="onSort($event)">#</th>
+                                        <th sortable="date" (sort)="onSort($event)">Titre</th>
+                                        <th sortable="type" (sort)="onSort($event)">description</th>
+                                        <th sortable="currency" (sort)="onSort($event)">Limite</th>
+                                        <th sortable="amount" (sort)="onSort($event)">Recruteur</th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr *ngFor="let table of activities$ | async">
+                                    <tr *ngFor="let table of Offres.content ">
                                         <td class="text-body fw-bold">{{table.id}} </td>
-                                        <td>{{table.date}}</td>
-                                        <td>{{table.type}}</td>
-                                        <td>{{table.currency}} </td>
-                                        <td>{{table.amount}}</td>
-                                        <td>{{table.usd}}</td>
+                                        <td>{{table.titre}}</td>
+                                        <td>{{table.description}}</td>
+                                        <td>{{table.limite}} </td>
+                                        <td>{{table.recruteur.nom+" " +table.recruteur.prenom}}</td>
                                     </tr>
                                 </tbody>
                             </table>
                             <!-- End table -->
                             <div class="row justify-content-md-between align-items-md-center mt-2">
-                                <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
-                                        aria-live="polite">
-                                        Showing
-                                        {{service.startIndex + 1}} to
-                                        {{service.endIndex}} of {{service.totalRecords}}
-                                        entries
-                                    </div>
-                                </div>
-                                <!-- Pagination -->
-                                <div class="col-sm-12 col-md-5">
-                                    <div class="text-md-right float-md-end pagination-rounded">
-                                        <ul class="pagination pagination-rounded justify-content-end mb-2">
-                                            <pagination [totalItems]="(total | async)!" [(ngModel)]="service.page"
-                                                [itemsPerPage]="service.pageSize"></pagination>
-                                        </ul>
-                                    </div>
-                                </div>
+                           
+                                
                                 <!-- End Pagination -->
                             </div>
                         </tab>
-                        <tab heading="Buy" class="mt-4">
-                            <div class="row mb-md-2">
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="tickets-table_length"><label
-                                            class="d-inline-flex align-items-center">Show
-                                            <select name="tickets-table_length" aria-controls="tickets-table"
-                                                name="pageSize" [(ngModel)]="service.pageSize"
-                                                class="custom-select custom-select-sm form-control form-control-sm mx-2">
-                                                <option [ngValue]="10">10</option>
-                                                <option [ngValue]="25">25</option>
-                                                <option [ngValue]="50">50</option>
-                                                <option [ngValue]="100">100</option>
-                                            </select> entries</label></div>
-                                </div>
-                                <!-- Search -->
-                                <div class="col-sm-12 col-md-6">
-                                    <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
-                                            class="d-inline-flex align-items-center">Search:
-                                            <input type="text" name="searchTerm"
-                                                class="form-control form-control-sm ms-2" aria-controls="tickets-table"
-                                                [(ngModel)]="service.searchTerm"></label></div>
-                                </div>
-                                <!-- End search -->
-                            </div>
-                            <!-- Table -->
-                            <table id="basic-datatable" class="table datatables dt-responsive nowrap">
-                                <thead>
-                                    <tr>
-                                        <th sortable="id" (sort)="onSort($event)">ID No</th>
-                                        <th sortable="date" (sort)="onSort($event)">Date</th>
-                                        <th sortable="type" (sort)="onSort($event)">Type</th>
-                                        <th sortable="currency" (sort)="onSort($event)">Currency</th>
-                                        <th sortable="amount" (sort)="onSort($event)">Amount</th>
-                                        <th sortable="usd" (sort)="onSort($event)">Amount in USD</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let table of activities$ | async">
-                                        <ng-template [ngIf]="table.type == 'Buy'">
-                                            <td class="text-body fw-bold">{{table.id}} </td>
-                                            <td>{{table.date}}</td>
-                                            <td>{{table.type}} </td>
-                                            <td>{{table.currency}} </td>
-                                            <td>{{table.amount}}</td>
-                                            <td>{{table.usd}}</td>
-                                        </ng-template>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- End table -->
-                            <div class="row justify-content-md-between align-items-md-center mt-2">
-                                <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
-                                        aria-live="polite">
-                                        Showing
-                                        {{service.startIndex + 1}} to
-                                        {{service.endIndex}} of {{service.totalRecords}}
-                                        entries
-                                    </div>
-                                </div>
-                                <!-- Pagination -->
-                                <div class="col-sm-12 col-md-5">
-                                    <div class="text-md-right float-md-end pagination-rounded">
-                                        <ul class="pagination pagination-rounded justify-content-end mb-2">
-                                            <pagination [totalItems]="(total | async)!" [(ngModel)]="service.page"
-                                                [itemsPerPage]="service.pageSize"></pagination>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Pagination -->
-                            </div>
-                        </tab>
-                        <tab heading="Sell" class="mt-4">
-                            <div class="row mb-md-2">
-                                <div class="col-sm-12 col-md-6">
-                                    <div class="dataTables_length" id="tickets-table_length"><label
-                                            class="d-inline-flex align-items-center">Show
-                                            <select name="tickets-table_length" aria-controls="tickets-table"
-                                                name="pageSize" [(ngModel)]="service.pageSize"
-                                                class="custom-select custom-select-sm form-control form-control-sm mx-2">
-                                                <option [ngValue]="10">10</option>
-                                                <option [ngValue]="25">25</option>
-                                                <option [ngValue]="50">50</option>
-                                                <option [ngValue]="100">100</option>
-                                            </select> entries</label></div>
-                                </div>
-                                <!-- Search -->
-                                <div class="col-sm-12 col-md-6">
-                                    <div id="tickets-table_filter" class="dataTables_filter text-md-end"><label
-                                            class="d-inline-flex align-items-center">Search:
-                                            <input type="text" name="searchTerm"
-                                                class="form-control form-control-sm ms-2" aria-controls="tickets-table"
-                                                [(ngModel)]="service.searchTerm"></label></div>
-                                </div>
-                                <!-- End search -->
-                            </div>
-                            <!-- Table -->
-                            <table id="basic-datatable" class="table datatables dt-responsive nowrap">
-                                <thead>
-                                    <tr>
-                                        <th sortable="id" (sort)="onSort($event)">ID No</th>
-                                        <th sortable="date" (sort)="onSort($event)">Date</th>
-                                        <th sortable="type" (sort)="onSort($event)">Type</th>
-                                        <th sortable="currency" (sort)="onSort($event)">Currency</th>
-                                        <th sortable="amount" (sort)="onSort($event)">Amount</th>
-                                        <th sortable="usd" (sort)="onSort($event)">Amount in USD</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr *ngFor="let table of activities$ | async">
-                                        <ng-template [ngIf]="table.type == 'Sell'">
-                                            <td class="text-body fw-bold">{{table.id}}</td>
-                                            <td>{{table.id}}</td>
-                                            <td>{{table.type}} </td>
-                                            <td>{{table.currency}}</td>
-                                            <td>{{table.amount}}</td>
-                                            <td>{{table.usd}}</td>
-                                        </ng-template>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <!-- End table -->
-                            <div class="row justify-content-md-between align-items-md-center mt-2">
-                                <div class="col-sm-12 col-md-5">
-                                    <div class="dataTables_info mb-2" id="tickets-table_info" role="status"
-                                        aria-live="polite">
-                                        Showing
-                                        {{service.startIndex + 1}} to
-                                        {{service.endIndex}} of {{service.totalRecords}}
-                                        entries
-                                    </div>
-                                </div>
-                                <!-- Pagination -->
-                                <div class="col-sm-12 col-md-5">
-                                    <div class="text-md-right float-md-end pagination-rounded">
-                                        <ul class="pagination pagination-rounded justify-content-end mb-2">
-                                            <pagination [totalItems]="(total | async)!" [(ngModel)]="service.page"
-                                                [itemsPerPage]="service.pageSize"></pagination>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <!-- End Pagination -->
-                            </div>
-                        </tab>
+                    
                     </tabset>
                 </div>
             </div>
