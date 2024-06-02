@@ -2,12 +2,12 @@ export const environment = {
   production: true,
   defaultauth: 'firebase',
   firebaseConfig: {
-    apiKey: "AIzaSyCEIz_fO4wRo4uVtRQi7SdwEbS1EE1zPU8",
-    authDomain: "equipement-4cddc.firebaseapp.com",
-    projectId: "equipement-4cddc",
-    storageBucket: "equipement-4cddc.appspot.com",
-    messagingSenderId: "670371946829",
-    appId: "1:670371946829:web:d0c6bf9f4a00078ea41704",
-    measurementId: "G-DRFCFDQZY9"
+    apiKey: "AIzaSyCg01xL3zDx6fPQg6OKsNCfudGK3lZiYIc",
+    authDomain: "interview-8c490.firebaseapp.com",
+    projectId: "interview-8c490",
+    storageBucket: "interview-8c490.appspot.com",
+    messagingSenderId: "477197564703",
+    appId: "1:477197564703:web:49e03e6acdda7b92c30e2a",
+    measurementId: "G-Y2SW0QD48G"
   }
 };

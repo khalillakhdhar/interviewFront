@@ -1,10 +1,11 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
-import { emailSentBarChart, monthlyEarningChart } from './data';
-import { ChartType } from './dashboard.model';
-import { BsModalService, BsModalRef, ModalDirective } from 'ngx-bootstrap/modal';
+import { BsModalRef, BsModalService, ModalDirective } from 'ngx-bootstrap/modal';
 import { EventService } from '../../../core/services/event.service';
+import { ChartType } from './dashboard.model';
+import { emailSentBarChart, monthlyEarningChart } from './data';
 
 import { ConfigService } from '../../../core/services/config.service';
+import { UtilisateurService } from '../../../shared/services/utilisateur.service';
 
 @Component({
   selector: 'app-default',
@@ -18,6 +19,8 @@ export class DefaultComponent implements OnInit {
   emailSentBarChart: ChartType;
   monthlyEarningChart: ChartType;
   transactions: any;
+  email: any;
+  currentUser:any;
   statData: any;
   config:any = {
     backdrop: true,
@@ -28,11 +31,22 @@ export class DefaultComponent implements OnInit {
 
   @ViewChild('content') content;
   @ViewChild('center', { static: false }) center?: ModalDirective;
-  constructor(private modalService: BsModalService, private configService: ConfigService, private eventService: EventService) {
+  constructor(private modalService: BsModalService, private configService: ConfigService, private eventService: EventService
+    ,private utilisateurService:UtilisateurService
+  ) {
   }
 
   ngOnInit() {
+    sessionStorage.getItem('authUser');
+    console.log(sessionStorage.getItem('authUser'));
 
+    let user:any;
+    user= JSON.parse(sessionStorage.getItem('authUser'));
+    this.email = user.email;
+    this.getUserbyEmail(this.email);
+
+    localStorage.setItem('email', this.email);
+    console.log(this.email);
     /**
      * horizontal-vertical layput set
      */
@@ -56,11 +70,16 @@ export class DefaultComponent implements OnInit {
     this.fetchData();
   }
 
-  ngAfterViewInit() {
-    setTimeout(() => {
-     this.center?.show()
-    }, 2000);
+  getUserbyEmail(email: any) {
+this.utilisateurService.findUserByEmail(email).subscribe(data=>{
+  this.currentUser = data;
+  console.log(this.currentUser);
+})
   }
+
+
+
+
 
   /**
    * Fetches the data

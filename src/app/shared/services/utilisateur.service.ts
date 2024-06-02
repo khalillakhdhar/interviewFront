@@ -32,5 +32,9 @@ deleteUtilisateur(id){
 assignProfil(id,profile){
   return this.http.put(this.url+"/"+id,profile);
 }
+// findUserByEmail
+findUserByEmail(email){
+  return this.http.get(this.url+"/email/"+email);
+}
 
 }

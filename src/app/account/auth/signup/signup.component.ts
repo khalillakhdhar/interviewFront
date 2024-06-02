@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { AuthenticationService } from '../../../core/services/auth.service';
+import { Utilisateur } from 'src/app/shared/classes/utilisateur';
 import { environment } from '../../../../environments/environment';
-import { first } from 'rxjs/operators';
+import { AuthenticationService } from '../../../core/services/auth.service';
 import { UserProfileService } from '../../../core/services/user.service';
+import { UtilisateurService } from '../../../shared/services/utilisateur.service';
 
 @Component({
   selector: 'app-signup',
@@ -13,6 +14,9 @@ import { UserProfileService } from '../../../core/services/user.service';
   styleUrls: ['./signup.component.scss']
 })
 export class SignupComponent implements OnInit {
+
+
+  utilisateur:Utilisateur={} as Utilisateur;
 
   signupForm: UntypedFormGroup;
   submitted:any = false;
@@ -24,9 +28,11 @@ export class SignupComponent implements OnInit {
 
   // tslint:disable-next-line: max-line-length
   constructor(private formBuilder: UntypedFormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService,
-    private userService: UserProfileService) { }
+    private userService: UserProfileService,private utilisateurService:UtilisateurService) { }
 
   ngOnInit() {
+    this.utilisateur.grade="Admin";
+   
     this.signupForm = this.formBuilder.group({
       username: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
@@ -44,11 +50,11 @@ export class SignupComponent implements OnInit {
     this.submitted = true;
 
     // stop here if form is invalid
-    if (this.signupForm.invalid) {
-      return;
-    } else {
+   this.utilisateurService.addUtilisateur(this.utilisateur).subscribe(data=>{
+      console.log(data);
+
       if (environment.defaultauth === 'firebase') {
-        this.authenticationService.register(this.f.email.value, this.f.password.value).then((res: any) => {
+        this.authenticationService.register(this.utilisateur.email, this.utilisateur.mdp).then((res: any) => {
           this.successmsg = true;
           if (this.successmsg) {
             this.router.navigate(['/dashboard']);
@@ -57,20 +63,9 @@ export class SignupComponent implements OnInit {
           .catch(error => {
             this.error = error ? error : '';
           });
-      } else {
-        this.userService.register(this.signupForm.value)
-          .pipe(first())
-          .subscribe(
-            data => {
-              this.successmsg = true;
-              if (this.successmsg) {
-                this.router.navigate(['/account/login']);
-              }
-            },
-            error => {
-              this.error = error ? error : '';
-            });
       }
-    }
+    }) 
   }
+
 }
+

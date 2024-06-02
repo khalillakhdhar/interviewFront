@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 
 import { User } from '../models/auth.models';
 
@@ -11,7 +11,7 @@ export class UserProfileService {
         return this.http.get<User[]>(`/api/login`);
     }
 
-    register(user: User) {
+    register(user: any) {
         return this.http.post(`/users/register`, user);
     }
 }
