@@ -60,14 +60,14 @@ export const MENU: MenuItem[] = [
         icon: 'bx-calendar',
         link: '/calendar',
     },
-    */
+    
     {
         id: 11,
         label: 'MENUITEMS.CHAT.TEXT',
         icon: 'bx-chat',
         link: '/chat',
         
-    },
+    },*/
     /*
     {
         id: 12,
@@ -367,13 +367,13 @@ export const MENU: MenuItem[] = [
                 link: '/jobs/list',
                 parentId: 57
             },
-            {
+          /*    {
                 id: 59,
                 label: 'MENUITEMS.JOBS.LIST.JOBGRID',
                 link: '/jobs/grid',
                 parentId: 57
             },
-           /* {
+          {
                 id: 60,
                 label: 'MENUITEMS.JOBS.LIST.APPLYJOB',
                 link: '/jobs/apply',
