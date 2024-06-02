@@ -225,6 +225,16 @@ addOneInterview()
   )
 
 }
+deleteInterview(id:any){
+  if(confirm("Voulez-vous vraiment supprimer cette interview?"))
+    {
+  this.interviewService.deleteInterview(id).subscribe(
+    response=>{
+      console.log("interview supprimé avec succés",response);
+    }
+  )
+}
+}
 
 
 }

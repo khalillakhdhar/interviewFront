@@ -51,15 +51,18 @@ utilisateur={} as Utilisateur;
     private utilisateurService:UtilisateurService
   ) {
     // get all utilisateurs
+  this.getUtilisateurs();
+    
+  
+    this.contactsList = service.countries$;
+    this.total = service.total$;
+  }
+  getUtilisateurs(){
     this.utilisateurService.getUtilisateurs().subscribe(data=>{
       this.utilisateurs = data;
       console.log(this.utilisateurs);
     }
     )
-    
-  
-    this.contactsList = service.countries$;
-    this.total = service.total$;
   }
   /*
 getPersonnes(){
@@ -183,6 +186,7 @@ createUtilisateur(){
     response=>{
       console.log("utilisateur ajouté avec succés",response);
       this.utilisateur={} as Utilisateur;
+      this.getUtilisateurs();
     }
   )
 }

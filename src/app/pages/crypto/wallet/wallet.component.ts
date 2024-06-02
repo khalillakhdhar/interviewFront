@@ -75,4 +75,14 @@ export class WalletComponent implements OnInit {
       }
     )
   }
+  deleteOffre(id:any){
+    if(confirm("Voulez-vous vraiment supprimer cette offre?"))
+      {
+    this.offreService.deleteOffre(id).subscribe(
+      response=>{
+        console.log("offre supprimé avec succés",response);
+      }
+    )
+  }
+  }
 }

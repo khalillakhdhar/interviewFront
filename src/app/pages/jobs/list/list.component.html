@@ -6,9 +6,8 @@
       <div class="card">
         <div class="card-body border-bottom">
           <div class="d-flex align-items-center">
-            <h5 class="mb-0 card-title flex-grow-1">Jobs Lists</h5>
+            <h5 class="mb-0 card-title flex-grow-1">Meetings disponibles</h5>
             <div class="flex-shrink-0 d-flex gap-1">
-              <a href="javascript:void(0);" class="btn btn-primary" (click)="openModal(content)">Ajouter un interview</a>
               <a href="javascript:void(0);" class="btn btn-light"><i class="mdi mdi-refresh"></i></a>
           
             </div>
@@ -40,14 +39,10 @@
                   <td><span class="badge" [ngClass]="{ 'bg-success': data.status === 'Active', 'bg-info': data.status === 'New', 'bg-danger': data.status === 'Close'}">{{data.status}}</span></td>
                   <td>
                     <ul class="list-unstyled hstack gap-1 mb-0">
-                      <li data-bs-toggle="tooltip" data-bs-placement="top" title="View">
-                        <a routerLink="/jobs/details" class="btn btn-sm btn-soft-primary"><i class="mdi mdi-eye-outline"></i></a>
-                      </li>
-                      <li data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
-                        <a href="javascript:void(0);" class="btn btn-sm btn-soft-info" (click)="editDataGet(data.id,content)"><i class="mdi mdi-pencil-outline"></i></a>
-                      </li>
+                    
+                 
                       <li data-bs-toggle="tooltip" data-bs-placement="top" title="Delete">
-                        <a href="javascript:void(0);" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger" (click)="delete($event)"><i class="mdi mdi-delete-outline"></i></a>
+                        <a href="javascript:void(0);" data-bs-toggle="modal" class="btn btn-sm btn-soft-danger" (click)="deleteInterview(data.id)"><i class="mdi mdi-delete-outline"></i></a>
                       </li>
                     </ul>
                   </td>
@@ -156,86 +151,5 @@
 </ng-template>
 
 <!-- Order Create Model -->
-<ng-template #content role="document" let-modal>
-  <div class="modal-header">
-    <h5 class="modal-title" id="exampleModalLabel">Add Jobs</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="close-modal" (click)="modalRef?.hide()"></button>
-  </div>
-  <form (ngSubmit)="saveUser()" [formGroup]="jobListForm">
-    <div class="modal-body">
-      <input type="hidden" name="id" value="" formControlName="ids" />
-      <div class="mb-3">
-        <label for="customername-field" class="form-label">Jobs Title</label>
-        <input type="text" id="customername-field" class="form-control" placeholder="Enter Name" required formControlName="title" [ngClass]="{ 'is-invalid': submitted && form['title'].errors }" />
-        <div *ngIf="submitted && form['title'].errors" class="invalid-feedback" align="left">
-          <div *ngIf="form['title'].errors['required']">Jobs Title is required</div>
-        </div>
-      </div>
 
-      <div class="mb-3">
-        <label for="customername-field" class="form-label">Company Name</label>
-        <input type="text" id="customername-field" class="form-control" placeholder="Enter Name" required formControlName="name" [ngClass]="{ 'is-invalid': submitted && form['name'].errors }" />
-        <div *ngIf="submitted && form['name'].errors" class="invalid-feedback" align="left">
-          <div *ngIf="form['name'].errors['required']">Company Name is required</div>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label for="customername-field" class="form-label">Location</label>
-        <input type="text" id="customername-field" class="form-control" placeholder="Enter Location" required formControlName="location" [ngClass]="{ 'is-invalid': submitted && form['location'].errors }" />
-        <div *ngIf="submitted && form['location'].errors" class="invalid-feedback" align="left">
-          <div *ngIf="form['location'].errors['required']">Location is required</div>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label for="customername-field" class="form-label">Experience</label>
-        <input type="text" id="customername-field" class="form-control" placeholder="Enter Experience" required formControlName="experience" [ngClass]="{ 'is-invalid': submitted && form['experience'].errors }" />
-        <div *ngIf="submitted && form['experience'].errors" class="invalid-feedback" align="left">
-          <div *ngIf="form['experience'].errors['required']">Experience is required</div>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label for="customername-field" class="form-label">Position</label>
-        <input type="text" id="customername-field" class="form-control" placeholder="Enter Position" required formControlName="position" [ngClass]="{ 'is-invalid': submitted && form['position'].errors }" />
-        <div *ngIf="submitted && form['position'].errors" class="invalid-feedback" align="left">
-          <div *ngIf="form['position'].errors['required']">Position is required</div>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label for="payment-field" class="form-label">Type</label>
-        <select class="form-control" data-trigger name="payment-method" id="payment-field" formControlName="type" [ngClass]="{ 'is-invalid': submitted && form['type'].errors }">
-          <option value="">Type</option>
-          <option value="Full Time">Full Time</option>
-          <option value="Part Time">Part Time</option>
-        </select>
-        <div *ngIf="submitted && form['type'].errors" class="invalid-feedback" align="left">
-          <div *ngIf="form['type'].errors['required']">Type is required</div>
-        </div>
-      </div>
-
-      <div class="mb-3">
-        <label for="payment-field" class="form-label">Status</label>
-        <select class="form-control" data-trigger name="payment-method" id="payment-field" formControlName="status" [ngClass]="{ 'is-invalid': submitted && form['status'].errors }">
-          <option value="">Status</option>
-          <option value="Active">Active</option>
-          <option value="New">New</option>
-          <option value="Close">Close</option>
-        </select>
-        <div *ngIf="submitted && form['status'].errors" class="invalid-feedback" align="left">
-          <div *ngIf="form['status'].errors['required']">Status is required</div>
-        </div>
-      </div>
-
-    </div>
-    <div class="modal-footer">
-      <div class="hstack gap-2 justify-content-end">
-        <button type="button" class="btn btn-light" data-bs-dismiss="modal" (click)="modal.close('Close click')">Close</button>
-        <button type="submit" class="btn btn-success" id="add-btn">Add Order</button>
-      </div>
-    </div>
-  </form>
-</ng-template>
 <!--End Modal -->
