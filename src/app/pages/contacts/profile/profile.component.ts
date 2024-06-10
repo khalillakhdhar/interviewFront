@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { revenueBarChart, statData } from './data';
 
+import { InterviewService } from '../../../shared/services/interview.service';
 import { UtilisateurService } from '../../../shared/services/utilisateur.service';
 import { ChartType } from './profile.model';
 
@@ -22,11 +23,20 @@ export class ProfileComponent implements OnInit {
   statData:any;
   utilisateur:any;
 email:any;
-  constructor(private utilisateurService:UtilisateurService) { 
+interviews:any;
+
+  constructor(private utilisateurService:UtilisateurService, private interviewService:InterviewService) { 
     this.email = localStorage.getItem('email');
     console.log(this.email);
+    this.getInterviews();
   }
-
+getInterviews()
+{
+  this.interviewService.getInterviews().subscribe(data=>{
+    this.interviews = data;
+    console.log(this.interviews);
+  })
+}
   ngOnInit() {
     this.getUserbyEmail(this.email);
 

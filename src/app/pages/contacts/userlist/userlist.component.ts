@@ -190,6 +190,17 @@ createUtilisateur(){
     }
   )
 }
+// deletePersonne
+deleteUtilisateur(id:any){
+  if(confirm("Voulez-vous vraiment supprimer cet utilisateur?"))
+    {
+  this.utilisateurService.deleteUtilisateur(id).subscribe(
+    response=>{
+      console.log("utilisateur supprimé avec succés",response);
+      this.getUtilisateurs();
+    }
+  )
 
-
+    }
+}
 }

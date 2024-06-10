@@ -4,6 +4,7 @@ import { EventService } from '../../../core/services/event.service';
 import { ChartType } from './dashboard.model';
 import { emailSentBarChart, monthlyEarningChart } from './data';
 
+import { Router } from '@angular/router';
 import { ConfigService } from '../../../core/services/config.service';
 import { UtilisateurService } from '../../../shared/services/utilisateur.service';
 
@@ -32,11 +33,12 @@ export class DefaultComponent implements OnInit {
   @ViewChild('content') content;
   @ViewChild('center', { static: false }) center?: ModalDirective;
   constructor(private modalService: BsModalService, private configService: ConfigService, private eventService: EventService
-    ,private utilisateurService:UtilisateurService
+    ,private utilisateurService:UtilisateurService,private router:Router
   ) {
   }
 
   ngOnInit() {
+    
     sessionStorage.getItem('authUser');
     console.log(sessionStorage.getItem('authUser'));
 
@@ -68,6 +70,8 @@ export class DefaultComponent implements OnInit {
      * Fetches the data
      */
     this.fetchData();
+    // redirect to contacts/profile
+     this.router.navigate(['/contacts/profile']);
   }
 
   getUserbyEmail(email: any) {
