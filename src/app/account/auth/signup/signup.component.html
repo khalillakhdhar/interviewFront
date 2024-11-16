@@ -27,13 +27,10 @@
             </div>
             <div class="p-2">
 
-              <form class="needs-validation" name="signupForm" [formGroup]="signupForm" (ngSubmit)="onSubmit()"
+              <form class="needs-validation" name="signupForm"  
                 novalidate>
 
-                <alert type="success" *ngIf="successmsg" [dismissible]="false">Inscription avec succés.
-                </alert>
-
-                <alert type="danger" *ngIf="error" [dismissible]="false">{{ error }}</alert>
+              
 
                 <form (submit)="onSubmit()">
                   <div class="mb-3">
